@@ -7,7 +7,7 @@ namespace LibraryApplication {
             if (args.Length > 0) {
                 switch (args[0]) {
                     case "-v":
-                        Console.Write("LibraryApplication Version 1.0\n");
+                        Console.Write("LibraryApplication Version {0}\n", Application.version);
                         break;
                     case "-h":
                         Console.Write("Run the application without arguments to start the app.\n-v Displays application version.\n");

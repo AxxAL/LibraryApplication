@@ -4,9 +4,8 @@ using LibraryApplication.ObjectClasses;
 
 namespace LibraryApplication.Handlers {
     public class FileHandler {
-
-        private Library library = Library.getLibrary();
         private static FileHandler INSTANCE;
+        private Library library = Library.getLibrary();
         
         public static FileHandler gethandler() {
             if (INSTANCE == null) {
@@ -23,6 +22,7 @@ namespace LibraryApplication.Handlers {
                 writeFile.WriteLine(book.Title + "|" + book.Author + "|" + book.Pages + "|" + book.Available);
             }
             writeFile.Close();
+            writeFile.Dispose();
         } // Copies books from memory to disk.
         
         public void loadBooks() {
@@ -34,6 +34,7 @@ namespace LibraryApplication.Handlers {
                 library.registerBook(sArr[0], sArr[1], UInt32.Parse(sArr[2]));
             }
             readFile.Close();
+            readFile.Dispose();
         } // Loads books into memory.
         
         public void createSaveFile() {
@@ -42,7 +43,7 @@ namespace LibraryApplication.Handlers {
             }
         } // Creates save file if it doesn't exist.
 
-        public void deleteSaveFile() {
+        private void deleteSaveFile() {
             if (!File.Exists("books.txt")) {
                 File.Delete("books.txt");
             }

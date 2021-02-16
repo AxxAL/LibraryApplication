@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using LibraryApplication.ObjectClasses;
 
-namespace LibraryApplication.ObjectClasses {
+namespace LibraryApplication.Handlers {
     public class Library : List<Book> {
         private static Library INSTANCE; // Instance of this class.
-
+        
         public static Library getLibrary() {
             if (INSTANCE == null) { INSTANCE = new Library(); }
             return INSTANCE;
-        } // Singleton. Returns an object of this class
-
+        } // Singleton. Returns an object of this class.
+        
         public void registerBook(string title, string author, uint pages) {
             this.Add(new Book(title, author, pages));
         } // Registers a new book in the library.
@@ -33,9 +34,5 @@ namespace LibraryApplication.ObjectClasses {
             }
             return books;
         } // Queries the library by author and returns the books.
-
-        public List<Book> getAllBooks() {
-            return this;
-        } // Returns a list of all books in memory.
     } // This class inherits from the List class.
 }

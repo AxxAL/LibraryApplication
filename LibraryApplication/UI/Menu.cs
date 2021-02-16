@@ -53,7 +53,6 @@ namespace LibraryApplication.UI {
     } // Class contains the application UI.
 
     internal class Option {
-        
         private static Library library = Library.getLibrary();
 
         public static void registerABook() {
