@@ -16,10 +16,9 @@ namespace LibraryApplication.Handlers {
         } // Singleton. Returns an object of this class
         
         public void saveBooks() {
-            deleteSaveFile();
             using var writeFile = new StreamWriter("books.txt");
             foreach (var book in library) {
-                writeFile.WriteLine(book.Title + "|" + book.Author + "|" + book.Pages + "|" + book.Available);
+                writeFile.WriteLine(book.Id + "|" + book.Title + "|" + book.Author + "|" + book.Available);
             }
             writeFile.Close();
             writeFile.Dispose();
@@ -31,7 +30,7 @@ namespace LibraryApplication.Handlers {
             using var readFile = new StreamReader("books.txt");
             while ((s = readFile.ReadLine()) != null) {
                 string[] sArr = s.Split("|");
-                library.registerBook(sArr[0], sArr[1], UInt32.Parse(sArr[2]));
+                library.registerSavedBook(UInt32.Parse(sArr[0]), sArr[1], sArr[2], Boolean.Parse(sArr[3]));
             }
             readFile.Close();
             readFile.Dispose();
@@ -39,14 +38,10 @@ namespace LibraryApplication.Handlers {
         
         public void createSaveFile() {
             if (!File.Exists("books.txt")) {
-                File.Create("books.txt");
+                using var write = new StreamWriter("books.txt");
+                write.Close();
+                write.Dispose();
             }
         } // Creates save file if it doesn't exist.
-
-        private void deleteSaveFile() {
-            if (!File.Exists("books.txt")) {
-                File.Delete("books.txt");
-            }
-        } // Deletes save file if it exists.
     }
 } // Class handles books in save file.

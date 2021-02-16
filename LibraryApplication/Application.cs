@@ -4,11 +4,10 @@ using LibraryApplication.UI;
 namespace LibraryApplication {
 
     public class Application {
-        public static bool appStatusAlive { get; set; } // Keeps track of whether or not to keep application alive.
-        public const float version = 1.0f;
+        public bool appStatusAlive { get; set; } // Keeps track of whether or not to keep application alive.
+        public const float version = 1.0f; // To keep track of application version.
         private static FileHandler fileHandler = FileHandler.gethandler();
         
-
         public void run() {
             appStatusAlive = true;
             fileHandler.createSaveFile();
@@ -16,7 +15,7 @@ namespace LibraryApplication {
             Menu.start();
         } // Method that starts the entire application.
 
-        public static void exit() {
+        public void exit() {
             fileHandler.saveBooks();
             appStatusAlive = false;
         } // Method that safely kills the entire application.

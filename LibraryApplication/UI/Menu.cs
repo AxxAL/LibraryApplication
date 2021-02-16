@@ -1,6 +1,4 @@
 ﻿using System;
-using LibraryApplication.Handlers;
-using LibraryApplication.ObjectClasses;
 
 namespace LibraryApplication.UI {
     
@@ -17,162 +15,49 @@ namespace LibraryApplication.UI {
             "5. Loan a book.\n" +
             "6. Return a book.\n" +
             "7. Remove book from system.\n" +
-            "8. Exit.\n" +
+            "8. Exit. (Exit with this option in order to prevent data loss)\n" +
             "------------------------------------------\n"
         }; // Start menu UI
         
         public static void start() {
-            while (Application.appStatusAlive) {
+            bool loop = true;
+            while (loop) {
                 foreach (var line in startMenu) { Console.Write(line); }
-                
                 Console.Write("Select an option: ");
-                var selection = int.Parse(Console.ReadLine());
+                string selection = Console.ReadLine();
                 switch (selection) {
-                    case 1:
-                        Option.registerABook();
+                    case "1":
+                        Action.registerABook();
                         break;
-                    case 2:
-                        Option.searchForBookByTitle();
+                    case "2":
+                        Action.searchForBookByTitle();
                         break;
-                    case 3:
-                        Option.searchForBookByAuthor();
+                    case "3":
+                        Action.searchForBookByAuthor();
                         break;
-                    case 4:
-                        Option.listAllBooks();
+                    case "4":
+                        Action.listAllBooks();
+                        Action.cls();
                         break;
-                    case 5:
-                        Option.loanBook();
+                    case "5":
+                        Action.loanBook();
                         break;
-                    case 6:
-                        Option.returnBook();
+                    case "6":
+                        Action.returnBook();
                         break;
-                    case 8:
-                        Application.exit();
+                    case "7":
+                        Action.removeBook();
+                        break;
+                    case "8":
+                        loop = false;
                         break;
                     default:
+                        Console.Clear();
                         Console.Write("\n{0} is not a valid option...", selection);
-                        Option.cls();
+                        Action.cls();
                         break;
                 }
-            }
+            } // Loops until user chooses to exit.
         } // Print out UI & also lets user interact with application.
     } // Class contains the application UI.
-
-    internal class Option {
-        private static Library library = Library.getLibrary();
-
-        public static void registerABook() {
-            string title, author;
-            uint pages = 0;
-
-            Console.Clear();
-            Console.Write("You've selected the option to register a book.\n");
-            Console.Write("Please enter the title of the book: ");
-            title = Console.ReadLine();
-            Console.Write("Please enter the author of the book: ");
-            author = Console.ReadLine();
-            Console.Write("Please enter the amount of pages the book has: ");
-            pages = UInt32.Parse(Console.ReadLine());
-            Console.Clear();
-
-            if (title.Length != 0 && author.Length != 0 && pages != 0) {
-                try {
-                    library.registerBook(title, author, pages);
-                    Console.Write("You've registered a book!  {0}, written by {01}\n\n", title, author);
-                }
-                catch (Exception e) {
-                    Console.Write("Could not register the book...\n" + e.Message);
-                    throw;
-                }
-            }
-            cls();
-        } // Function for registering a book with user input and giving response to user.
-
-        public static void searchForBookByTitle() {
-            string query;
-            
-            Console.Clear();
-            Console.Write("You've selected the option to search for a book by title.\n");
-            Console.Write("Please enter title of the book: ");
-            query = Console.ReadLine();
-
-            if (query != "") {
-                try {
-                    var book = library.getBookByTitle(query);
-                    Console.Write("Found a book: {0}, written by {01}, Availability: {02}", book.Title, book.Author, book.Available);
-                }
-                catch (Exception e) {
-                    Console.WriteLine("Couldn't find the book you searched for :\\" + e.Message);
-                    throw;
-                }
-            }
-            cls();
-        } // Function for searching for a book by title, returns a message to the user.
-
-        public static void searchForBookByAuthor() {
-            string query;
-            
-            Console.Clear();
-            Console.Write("You've selected the option to search for a book by author.\n");
-            Console.Write("Please enter author of the book: ");
-            query = Console.ReadLine();
-
-            if (query != "") {
-                try {
-                    var books = library.getBookByAuthor(query);
-                    foreach (var book in books) {
-                        Console.Write("Found a book: {0}, written by {01}, Availability: {02}\n", book.Title, book.Author, book.Available);
-                    }
-                }
-                catch (Exception e) {
-                    Console.WriteLine("Couldn't find the book you searched for :\\" + e.Message);
-                    throw;
-                }
-            }
-            cls();
-        } // Function for searching for a book by author, returns a message to the user.
-
-        public static void listAllBooks() {
-            Console.Clear();
-            Console.Write("List of all books in the library:\n");
-            foreach (var book in library) {
-                Console.Write("{0}, written by {01}, Available: {02}\n", book.Title, book.Author, book.Available);
-            }
-            cls();
-        } // Prints out a list of all books in library.
-
-        public static void loanBook() {
-            Console.Clear();
-            Console.Write("Please enter the title of the book you want to loan:");
-            Book book = library.getBookByTitle(Console.ReadLine());
-            if (book.Available) {
-                book.Available = false;
-                Console.Write("You successfully loaned: {0}\n", book.Title);
-            }
-            else {
-                Console.Write("That book is not available...\n");
-            }
-            cls();
-        } // Checks if book is available and loans it if it is.
-
-        public static void returnBook() {
-            Console.Clear();
-            Console.Write("Please enter the title of the book you want to return:");
-            Book book = library.getBookByTitle(Console.ReadLine());
-            if (!book.Available) {
-                book.Available = true;
-                Console.Write("You successfully returned: {0}}\n", book.Title);
-            }
-            else {
-                Console.Write("That book is not loaned.\n");
-            }
-            cls();
-        } // Checks if book is loaned and returns it if it is.
-
-        public static void cls() {
-            Console.Write("\nPlease press any key to continue...");
-            Console.ReadLine();
-            Console.Clear();
-        } // I use this to let the user take their time to read the messages the application spits at them.
-    } // Class to contain the options for the user menu.
 }
