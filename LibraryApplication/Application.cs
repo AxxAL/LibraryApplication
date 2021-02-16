@@ -6,15 +6,7 @@ namespace LibraryApplication {
     public class Application {
 
         public static bool appStatusAlive { get; set; } // Keeps track of whether or not to keep application alive.
-        private FileHandler fileHandler = FileHandler.gethandler();
-        private static Application INSTANCE; // Instance of this class.
-
-        public static Application getApp() {
-            if (INSTANCE == null) {
-                INSTANCE = new Application();
-            }
-            return INSTANCE;
-        } // Singleton. Returns an object of this class
+        private static FileHandler fileHandler = FileHandler.gethandler();
 
         public void run() {
             appStatusAlive = true;
@@ -23,7 +15,7 @@ namespace LibraryApplication {
             Menu.start();
         } // Method that starts the entire application.
 
-        public void exit() {
+        public static void exit() {
             fileHandler.saveBooks();
             appStatusAlive = false;
         } // Method that safely kills the entire application.

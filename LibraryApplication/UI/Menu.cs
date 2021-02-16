@@ -22,7 +22,7 @@ namespace LibraryApplication.UI {
                 foreach (var line in startMenu) { Console.Write(line); }
                 
                 Console.Write("Select an option: ");
-                int selection = int.Parse(Console.ReadLine());
+                var selection = int.Parse(Console.ReadLine());
                 switch (selection) {
                     case 1:
                         Option.registerABook();
@@ -34,7 +34,7 @@ namespace LibraryApplication.UI {
                         Option.searchForBookByAuthor();
                         break;
                     case 7:
-                        Application.getApp().exit();
+                        Application.exit();
                         break;
                     default:
                         Console.Write("{0} is not a valid option...", selection);
