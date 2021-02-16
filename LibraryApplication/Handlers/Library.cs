@@ -24,7 +24,7 @@ namespace LibraryApplication.Handlers {
             }
             return book;
         } // Queries the library by title and returns the book.
-        
+
         public List<Book> getBookByAuthor(string query) {
             var books = new List<Book>();
             foreach (var b in this) {

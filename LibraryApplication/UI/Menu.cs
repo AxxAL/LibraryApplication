@@ -40,6 +40,12 @@ namespace LibraryApplication.UI {
                     case 4:
                         Option.listAllBooks();
                         break;
+                    case 5:
+                        Option.loanBook();
+                        break;
+                    case 6:
+                        Option.returnBook();
+                        break;
                     case 8:
                         Application.exit();
                         break;
@@ -134,6 +140,34 @@ namespace LibraryApplication.UI {
             }
             cls();
         } // Prints out a list of all books in library.
+
+        public static void loanBook() {
+            Console.Clear();
+            Console.Write("Please enter the title of the book you want to loan:");
+            Book book = library.getBookByTitle(Console.ReadLine());
+            if (book.Available) {
+                book.Available = false;
+                Console.Write("You successfully loaned: {0}\n", book.Title);
+            }
+            else {
+                Console.Write("That book is not available...\n");
+            }
+            cls();
+        } // Checks if book is available and loans it if it is.
+
+        public static void returnBook() {
+            Console.Clear();
+            Console.Write("Please enter the title of the book you want to return:");
+            Book book = library.getBookByTitle(Console.ReadLine());
+            if (!book.Available) {
+                book.Available = true;
+                Console.Write("You successfully returned: {0}}\n", book.Title);
+            }
+            else {
+                Console.Write("That book is not loaned.\n");
+            }
+            cls();
+        } // Checks if book is loaned and returns it if it is.
 
         public static void cls() {
             Console.Write("\nPlease press any key to continue...");
