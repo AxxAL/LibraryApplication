@@ -17,6 +17,7 @@ namespace LibraryApplication {
                         break;
                 }
             } // Handles startup if arguments are provided,
+            
             if (args.Length == 0) {
                 var application = new Application(); // Creates new instance of application.
                 application.run(); // Runs the newly created instance.

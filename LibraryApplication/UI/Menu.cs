@@ -1,5 +1,7 @@
 ﻿using System;
 using LibraryApplication.Handlers;
+using LibraryApplication.ObjectClasses;
+
 namespace LibraryApplication.UI {
     
     public class Menu {
@@ -11,10 +13,12 @@ namespace LibraryApplication.UI {
             "1. Register a book.\n" +
             "2. Search for a book by title.\n" +
             "3. Search for a book by author.\n" +
-            "4. Load a book.\n" +
-            "5. Return a book.\n" +
-            "6. Remove book from system.\n" +
-            "7. Exit.\n"
+            "4. List all books.\n" +
+            "5. Loan a book.\n" +
+            "6. Return a book.\n" +
+            "7. Remove book from system.\n" +
+            "8. Exit.\n" +
+            "------------------------------------------\n"
         }; // Start menu UI
         
         public static void start() {
@@ -33,11 +37,15 @@ namespace LibraryApplication.UI {
                     case 3:
                         Option.searchForBookByAuthor();
                         break;
-                    case 7:
+                    case 4:
+                        Option.listAllBooks();
+                        break;
+                    case 8:
                         Application.exit();
                         break;
                     default:
-                        Console.Write("{0} is not a valid option...", selection);
+                        Console.Write("\n{0} is not a valid option...", selection);
+                        Option.cls();
                         break;
                 }
             }
@@ -46,7 +54,7 @@ namespace LibraryApplication.UI {
 
     internal class Option {
         
-        private static BookManager bookManager = BookManager.getManager();
+        private static Library library = Library.getLibrary();
 
         public static void registerABook() {
             string title, author;
@@ -64,7 +72,7 @@ namespace LibraryApplication.UI {
 
             if (title.Length != 0 && author.Length != 0 && pages != 0) {
                 try {
-                    bookManager.registerBook(title, author, pages);
+                    library.registerBook(title, author, pages);
                     Console.Write("You've registered a book!  {0}, written by {01}\n\n", title, author);
                 }
                 catch (Exception e) {
@@ -85,7 +93,7 @@ namespace LibraryApplication.UI {
 
             if (query != "") {
                 try {
-                    var book = bookManager.getBookByTitle(query);
+                    var book = library.getBookByTitle(query);
                     Console.Write("Found a book: {0}, written by {01}, Availability: {02}", book.Title, book.Author, book.Available);
                 }
                 catch (Exception e) {
@@ -106,7 +114,7 @@ namespace LibraryApplication.UI {
 
             if (query != "") {
                 try {
-                    var books = bookManager.getBookByAuthor(query);
+                    var books = library.getBookByAuthor(query);
                     foreach (var book in books) {
                         Console.Write("Found a book: {0}, written by {01}, Availability: {02}\n", book.Title, book.Author, book.Available);
                     }
@@ -119,8 +127,17 @@ namespace LibraryApplication.UI {
             cls();
         } // Function for searching for a book by author, returns a message to the user.
 
-        private static void cls() {
-            Console.Write("Please press any key to continue...");
+        public static void listAllBooks() {
+            Console.Clear();
+            Console.Write("List of all books in the library:\n");
+            foreach (var book in library) {
+                Console.Write("{0}, written by {01}, Available: {02}\n", book.Title, book.Author, book.Available);
+            }
+            cls();
+        } // Prints out a list of all books in library.
+
+        public static void cls() {
+            Console.Write("\nPlease press any key to continue...");
             Console.ReadLine();
             Console.Clear();
         } // I use this to let the user take their time to read the messages the application spits at them.

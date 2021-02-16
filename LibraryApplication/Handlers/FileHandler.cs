@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.IO;
+using LibraryApplication.ObjectClasses;
 
 namespace LibraryApplication.Handlers {
     public class FileHandler {
 
-        private BookManager bookManager = BookManager.getManager();
+        private Library library = Library.getLibrary();
         private static FileHandler INSTANCE;
         
         public static FileHandler gethandler() {
@@ -18,19 +19,19 @@ namespace LibraryApplication.Handlers {
         public void saveBooks() {
             deleteSaveFile();
             using var writeFile = new StreamWriter("books.txt");
-            foreach (var book in bookManager.getBookList()) {
+            foreach (var book in library) {
                 writeFile.WriteLine(book.Title + "|" + book.Author + "|" + book.Pages + "|" + book.Available);
             }
             writeFile.Close();
         } // Copies books from memory to disk.
         
         public void loadBooks() {
-            bookManager.clearBookList();
+            library.Clear();
             string s;
             using var readFile = new StreamReader("books.txt");
             while ((s = readFile.ReadLine()) != null) {
                 string[] sArr = s.Split("|");
-                bookManager.registerBook(sArr[0], sArr[1], UInt32.Parse(sArr[2]));
+                library.registerBook(sArr[0], sArr[1], UInt32.Parse(sArr[2]));
             }
             readFile.Close();
         } // Loads books into memory.
