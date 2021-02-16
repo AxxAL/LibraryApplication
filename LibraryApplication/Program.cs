@@ -16,14 +16,13 @@ namespace LibraryApplication {
                         Console.Write("Use -h to see syntax.\n");
                         break;
                 }
-            } // Arguments to run application.
-
+            } // Handles startup if arguments are provided,
             if (args.Length == 0) {
                 var application = new Application(); // Creates new instance of application.
                 application.run(); // Runs the newly created instance.
-            } // Standard run.
+            } // Standard startup.
 
-            Console.Read(); // Pauses the program after application exits.
+            Console.Write("\nApplication paused. Press any button to exit."); Console.Read(); // Pauses the program after application exits.
         } // Program entrypoint.
     }
 }

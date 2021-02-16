@@ -18,14 +18,14 @@ namespace LibraryApplication.Handlers {
         public void saveBooks() {
             deleteSaveFile();
             using var writeFile = new StreamWriter("books.txt");
-            foreach (var book in bookManager.getBookDictionary()) {
+            foreach (var book in bookManager.getBookList()) {
                 writeFile.WriteLine(book.Title + "|" + book.Author + "|" + book.Pages + "|" + book.Available);
             }
             writeFile.Close();
         } // Copies books from memory to disk.
         
         public void loadBooks() {
-            bookManager.clearBookDictionary();
+            bookManager.clearBookList();
             string s;
             using var readFile = new StreamReader("books.txt");
             while ((s = readFile.ReadLine()) != null) {

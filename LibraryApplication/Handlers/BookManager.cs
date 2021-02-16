@@ -15,11 +15,11 @@ namespace LibraryApplication.Handlers {
             return INSTANCE;
         } // Singleton. Returns an object of this class
         
-        public List<Book> getBookDictionary() {
+        public List<Book> getBookList() {
             return this.books;
-        } // Returns book list
+        } // Returns the book list.
 
-        public void clearBookDictionary() {
+        public void clearBookList() {
             this.books.Clear();
         } // Clears the entire book list
         
@@ -29,7 +29,7 @@ namespace LibraryApplication.Handlers {
         
         public Book getBookByTitle(string query) {
             Book book = null;
-            foreach (var b in getBookDictionary()) {
+            foreach (var b in getBookList()) {
                 if (b.Title.Contains(query)) {
                     book = b;
                     break;
@@ -40,7 +40,7 @@ namespace LibraryApplication.Handlers {
         
         public List<Book> getBookByAuthor(string query) {
             var books = new List<Book>();
-            foreach (var b in getBookDictionary().Where(b => b.Author.Contains(query))) {
+            foreach (var b in getBookList().Where(b => b.Author.Contains(query))) {
                 books.Add(b);
                 break;
             }
