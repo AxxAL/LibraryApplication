@@ -10,7 +10,7 @@ namespace LibraryApplication {
                         Console.Write("LibraryApplication Version {0}\n", Application.version);
                         break;
                     case "-h":
-                        Console.Write("Run the application without arguments to start the app.\n-v Displays application version.\n");
+                        Console.Write("Run the application without arguments to start the app.\n-v Displays application version.\n-h Displays this message.\n");
                         break;
                     default:
                         Console.Write("Use -h to see syntax.\n");
@@ -21,9 +21,8 @@ namespace LibraryApplication {
             if (args.Length == 0) {
                 var application = new Application(); // Creates new instance of application.
                 application.run(); // Runs the newly created instance.
+                Console.Write("\nApplication paused. Press any button to exit."); Console.Read(); // Pauses the program after application exits.
             } // Standard startup.
-
-            Console.Write("\nApplication paused. Press any button to exit."); Console.Read(); // Pauses the program after application exits.
         } // Program entrypoint.
     }
 }
