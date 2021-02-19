@@ -24,10 +24,10 @@ namespace LibraryApplication.Handlers {
             this.Add(new Book(id, title, author, available));
         } // Used to register books that have been stored in save file.
 
-        public Book getBookById(string query) {
+        public Book getBookById(uint query) {
             Book book = null;
             foreach (var b in this) {
-                if (b.Id.Equals(UInt32.Parse(query))) {
+                if (b.Id.Equals(query)) {
                     book = b;
                     break;
                 }

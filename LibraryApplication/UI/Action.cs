@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LibraryApplication.Handlers;
 using LibraryApplication.ObjectClasses;
 
@@ -33,13 +34,13 @@ namespace LibraryApplication.UI{
             Console.Write("Please provide the id of the book you want to remove: ");
             string id = Console.ReadLine();
 
-            if (id.Length == 0) {
+            if (id.Length == 0 || !id.All(char.IsNumber)) {
                 Console.Write("You did not provide a proper ID...\n");
                 cls();
                 return;
             } // Prevents crashing if user did not provide proper details.
 
-            Book book = library.getBookById(id);
+            Book book = library.getBookById(UInt32.Parse(id));
 
             if (book == null) {
                 Console.Write("Could not find that book...\n");
@@ -53,22 +54,27 @@ namespace LibraryApplication.UI{
         } // Removes a book from the system.
 
         public static void searchForBookByTitle() {
-            string query;
-            
             Console.Clear();
             Console.Write("You've selected the option to search for a book by title.\n");
             Console.Write("Please enter title of the book (case sensitive): ");
-            query = Console.ReadLine();
+            
+            string query = Console.ReadLine();
 
-            if (query.Length > 0) {
-                
-                var book = library.getBookByTitle(query);
-                if (book == null) {
-                    Console.Write("Couldn't find the book you searched for :\\\n");
-                    return;
-                }
-                Console.Write("Found a book: ID: {0} | Title: {01} | Author: {02} | Available: {03}\n", book.Id, book.Title, book.Author, book.Available);
-            }
+            if (query.Length == 0) {
+                Console.Write("You did not provide a proper title...\n");
+                cls();
+                return;
+            } // Prevents crashing.
+            
+            var book = library.getBookByTitle(query);
+            
+            if (book == null) {
+                Console.Write("Couldn't find the book you searched for :\\\n");
+                cls();
+                return;
+            } // Prevents crashing
+            
+            Console.Write("Found a book: ID: {0} | Title: {01} | Author: {02} | Available: {03}\n", book.Id, book.Title, book.Author, book.Available);
             cls();
         } // Function for searching for a book by title, returns a message to the user.
 
@@ -116,8 +122,16 @@ namespace LibraryApplication.UI{
             Console.Clear();
             listAllBooks();
             Console.Write("Please enter the id of the book you want to loan: ");
-            Book book = library.getBookById(Console.ReadLine());
-
+            string id = Console.ReadLine();
+            
+            if (id.Length == 0 || !id.All(char.IsNumber)) {
+                Console.Write("You did not provide a proper ID...\n");
+                cls();
+                return;
+            } // Prevents crashing if user did not provide proper details.
+            
+            Book book = library.getBookById(UInt32.Parse(id));
+            
             if (book == null) { 
                 Console.Write("Couldn't find the book you searched for :\\\n");
             }
@@ -136,7 +150,15 @@ namespace LibraryApplication.UI{
             Console.Clear();
             listAllBooks();
             Console.Write("Please enter the id of the book you want to return: ");
-            Book book = library.getBookById(Console.ReadLine());
+            string id = Console.ReadLine();
+
+            if (id.Length == 0 || !id.All(char.IsNumber)) {
+                Console.Write("You did not provide a proper ID...\n");
+                cls();
+                return;
+            } // Prevents crashing if user did not provide proper details.
+            
+            Book book = library.getBookById(UInt32.Parse(id));
             if (!book.Available) {
                 book.Available = true;
                 Console.Write("You successfully returned: {0}\n", book.Title);
