@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using LibraryApplication.ObjectClasses;
 
@@ -38,7 +37,7 @@ namespace LibraryApplication.Handlers {
         public Book getBookByTitle(string query) {
             Book book = null;
             foreach (var b in this) {
-                if (b.Title.Equals(query)) {
+                if (b.Title.Contains(query)) {
                     book = b;
                     break;
                 }
@@ -49,7 +48,7 @@ namespace LibraryApplication.Handlers {
         public List<Book> getBookByAuthor(string query) {
             var books = new List<Book>();
             foreach (var b in this) {
-                if (b.Author.Equals(query)) {
+                if (b.Author.Contains(query)) {
                     books.Add(b);
                 }
             }
