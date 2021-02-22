@@ -12,7 +12,6 @@ namespace LibraryApplication.ObjectClasses {
         private BookData _data; // Object to keep & access data.
         private Random random = new Random(); // For randomising book id.
         
-
         public Book(string title, string author) {
             this.Id = (uint) random.Next(1, 2000);
             this.Title = title;
