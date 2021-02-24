@@ -10,10 +10,9 @@ namespace LibraryApplication.ObjectClasses {
             public bool available;
         } // Struct for containing the book object's data.
         private BookData _data; // Object to keep & access data.
-        private Random random = new Random(); // For randomising book id.
         
         public Book(string title, string author) {
-            this.Id = (uint) random.Next(1, 2000);
+            this.Id = (uint) new Random().Next(1, 2000);
             this.Title = title;
             this.Author = author;
             this.Available = true;

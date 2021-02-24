@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using LibraryApplication.ObjectClasses;
 
 namespace LibraryApplication.Handlers {
     public class FileHandler {
@@ -13,7 +12,7 @@ namespace LibraryApplication.Handlers {
             }
             INSTANCE.createSaveFile();
             return INSTANCE;
-        } // Singleton. Returns an object of this class
+        } // Singleton. Returns an object of this class.
         
         public void saveBooks() {
             using var writeFile = new StreamWriter("books.txt");
@@ -35,7 +34,7 @@ namespace LibraryApplication.Handlers {
             readFile.Close();
             readFile.Dispose();
         } // Loads books into memory.
-        
+
         public void createSaveFile() {
             if (!File.Exists("books.txt")) {
                 using var write = new StreamWriter("books.txt");
