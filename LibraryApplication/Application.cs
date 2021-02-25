@@ -4,7 +4,7 @@ using LibraryApplication.UI;
 namespace LibraryApplication {
 
     public class Application {
-        public bool appStatusAlive { get; set; } // Keeps track of whether or not to keep application alive.
+        private bool appStatusAlive { get; set; } // Keeps track of whether or not to keep application alive.
         public const float version = 1.0f; // To keep track of application version.
         private static FileHandler fileHandler = FileHandler.gethandler();
         

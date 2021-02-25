@@ -24,7 +24,6 @@ namespace LibraryApplication {
                 
                 application.exit(); // Exits safely.
             } // Standard startup.
-
         } // Program entrypoint.
     }
 }

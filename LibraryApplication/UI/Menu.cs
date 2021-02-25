@@ -22,7 +22,7 @@ namespace LibraryApplication.UI {
         public static void start() {
             bool loop = true;
             while (loop) {
-                foreach (var line in startMenu) { Console.Write(line); }
+                foreach (var line in startMenu) { Console.Write(line); } // Loops through each line of the menu and prints it.
                 Console.Write("Select an option: ");
                 string selection = Console.ReadLine();
                 switch (selection) {
