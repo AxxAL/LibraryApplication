@@ -134,13 +134,13 @@ namespace LibraryApplication.UI{
             
             if (book == null) { 
                 Console.Write("Couldn't find the book you searched for :\\\n");
-            }
+                return;
+            } // Prevents crashing if book is not found.
             
             if (book.Available) {
                 book.Available = false;
                 Console.Write("You successfully loaned: {0}\n", book.Title);
-            }
-            else {
+            } else {
                 Console.Write("That book is not available...\n");
             }
             cls();
